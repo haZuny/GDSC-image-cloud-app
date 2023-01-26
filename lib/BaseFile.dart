@@ -7,10 +7,13 @@ int color_mint = 0xff4DB5CB;
 
 /// Size
 // 공통
-double btnHeightSize = 60;
+double btnHeightSize = 50;
 double btnWidthSize = 200;
 double btnFontSize = 15;
 double btnRound = 20;
+double appBarMenuPaddingSize = 15;
+double appBarDropDownWidth = 150;
+double appBarDropDownIconSize = 30;
 // MainPage
 int listBoxSizePercent = 70;
 double titleImgSize = 60;
@@ -18,7 +21,6 @@ double titleImgRound = 20;
 double mainListTitleFontSize = 20;
 double mainListPaddingSize = 20;
 double mainImgTitleThinSize = 30;
-
 
 /// 화면 크기 반환
 double getFulLSizePercent(BuildContext context, int percent, bool isWidth){

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'MainPage.dart';
+import 'ImgListPage.dart';
 
 void main() {
+  /// 상태바 색상 변경
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(const MyApp());
 }
 
@@ -14,9 +18,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(systemOverlayStyle:SystemUiOverlayStyle.light,)
       ),
-      home: MainPage(),
+      // home: MainPage(),
+      home: ImageListPage(),
     );
   }
 }
