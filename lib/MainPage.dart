@@ -274,9 +274,9 @@ class MainCategory {
   MainCategory(String title, int imgNum) {
     this.title = title;
     this.imgNum = imgNum;
-    imgList.add(Image.asset('img/test1.jpg', fit: BoxFit.fill));
-    imgList.add(Image.asset('img/test2.jpg', fit: BoxFit.fill));
-    imgList.add(Image.asset('img/test3.jpg', fit: BoxFit.fill));
-    imgList.add(Image.asset('img/test4.jpg', fit: BoxFit.fill));
+    imgList.add(Image.asset('assets/img/test1.jpg', fit: BoxFit.fill));
+    imgList.add(Image.asset('assets/img/test2.jpg', fit: BoxFit.fill));
+    imgList.add(Image.asset('assets/img/test3.jpg', fit: BoxFit.fill));
+    imgList.add(Image.asset('assets/img/test4.jpg', fit: BoxFit.fill));
   }
 }
