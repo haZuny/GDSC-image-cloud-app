@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:toy_project/AppBar.dart';
+import 'package:toy_project/AppBar_Drawer.dart';
 
 import 'BaseFile.dart';
 
@@ -25,7 +25,7 @@ class _MainPage extends State<MainPage> {
 
   @override
   Widget build(context) => Scaffold(
-        appBar: MyAppBar(),
+        appBar: MyAppBar(true),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
