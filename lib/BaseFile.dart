@@ -22,7 +22,6 @@ double mainListTitleFontSize = 20;
 double mainListPaddingSize = 20;
 double mainImgTitleThinSize = 30;
 
-
 /// 화면 크기 반환
 double getFulLSizePercent(BuildContext context, int percent, bool isWidth){
   if(isWidth)
