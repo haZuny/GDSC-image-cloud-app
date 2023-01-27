@@ -22,6 +22,10 @@ double titleImgRound = 20;
 double mainListTitleFontSize = 20;
 double mainListPaddingSize = 20;
 double mainImgTitleThinSize = 30;
+// AddImgDialog
+double bgOpacity = 0.8;
+double bgPageBtnSize = 80;
+double bgPageIconSize = 50;
 // ImageListPage
 double imgListPageDateFontSize = 18;
 double imgListPageDateFontPadding = 10;
