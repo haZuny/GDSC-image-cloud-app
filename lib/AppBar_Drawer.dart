@@ -3,6 +3,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:toy_project/MainPage.dart';
+import 'package:toy_project/SignInPage.dart';
 import 'BaseFile.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSize {
@@ -34,7 +35,7 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
               ),
               hint: Text('asdf'),
               items: [
-                // home
+                /// home
                 DropdownMenuItem(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -49,7 +50,7 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
                   ),
                   value: 1,
                 ),
-                // Sign out
+                /// Sign out
                 DropdownMenuItem(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -71,6 +72,7 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
                     Get.offAll(MainPage());
                     break;
                   case 2:
+                    Get.offAll(SignInPage());
                     print('qwer');
                     break;
                   default:

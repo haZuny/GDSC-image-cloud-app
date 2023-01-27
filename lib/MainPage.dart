@@ -245,16 +245,22 @@ class _MainPage extends State<MainPage> {
                                   onPressed: () {},
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(16)),
+                                          borderRadius: BorderRadius.circular(
+                                              16)),
                                       backgroundColor: Color(color_whiteMint),
-                                      minimumSize:
-                                          Size(bgPageBtnSize, bgPageBtnSize),
+                                      minimumSize: Size(
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true),
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true)),
                                       maximumSize:
-                                          Size(bgPageBtnSize, bgPageBtnSize)),
+                                          Size(
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true),
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true))),
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.camera_alt_outlined,
@@ -265,27 +271,36 @@ class _MainPage extends State<MainPage> {
                                         '사진 찍기',
                                         style: TextStyle(
                                             color: Color(color_deepMint),
-                                            fontSize: 20, fontWeight: FontWeight.bold),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
                                       )
                                     ],
                                   ),
                                 ),
-                                Container(width: bgPageBtnSize/5,),
+                                Container(
+                                  width: bgPageGabPerBtn,
+                                ),
                                 // 앨범 추가 버튼
                                 ElevatedButton(
                                   onPressed: () {},
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(16)),
+                                          borderRadius: BorderRadius.circular(
+                                              16)),
                                       backgroundColor: Color(color_whiteMint),
-                                      minimumSize:
-                                      Size(bgPageBtnSize, bgPageBtnSize),
+                                      minimumSize: Size(
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true),
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true)),
                                       maximumSize:
-                                      Size(bgPageBtnSize, bgPageBtnSize)),
+                                          Size(
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true),
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true))),
                                   child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.image_outlined,
@@ -296,7 +311,8 @@ class _MainPage extends State<MainPage> {
                                         '앨범에서\n가져오기',
                                         style: TextStyle(
                                             color: Color(color_deepMint),
-                                            fontSize: 20, fontWeight: FontWeight.bold),
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
                                       )
                                     ],
                                   ),

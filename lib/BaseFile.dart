@@ -15,6 +15,16 @@ double appBarMenuPaddingSize = 15;
 double appBarDropDownWidth = 150;
 double appBarDropDownIconSize = 30;
 double floatingBtnMargin = 10;
+int btnSingleWidthPercent = 50;
+double btnHeight = 50;
+// SignInUpPage
+double signInPageTFRound = 10;
+double signInPageTFBorderWidth = 2;
+double signInPageTFLabelFontSize = 20;
+int signInPageTFWidthPercent = 90;
+double signInPagePerTFGab = 30;
+double signInPagePerBtnGab = 20;
+double signInPageTF_BTNGab = 70;
 // MainPage
 int listBoxSizePercent = 70;  // height
 double titleImgSize = 60;
@@ -24,7 +34,8 @@ double mainListPaddingSize = 20;
 double mainImgTitleThinSize = 30;
 // AddImgDialog
 double bgOpacity = 0.8;
-double bgPageBtnSize = 80;
+int bgPageBtnSizePercent = 35;
+double bgPageGabPerBtn = 20;
 double bgPageIconSize = 50;
 // ImageListPage
 double imgListPageDateFontSize = 18;
