@@ -1,8 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:toy_project/AppBar_Drawer.dart';
+
+import 'package:get/get.dart';
+import 'GetControllers.dart';
 
 import 'BaseFile.dart';
+import 'ImgListPage.dart';
+import 'AppBar_Drawer.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -10,18 +13,18 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPage extends State<MainPage> {
-  List<MainCategory> categoryList = [];
+  /// GetX Controller
+  final categoryController = Get.put(MainCategoryController());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    categoryList.add(MainCategory('타이틀', 0));
-    categoryList.add(MainCategory('타이틀', 1));
-    categoryList.add(MainCategory('타이틀', 1));
-    categoryList.add(MainCategory('타이틀', 2));
-    categoryList.add(MainCategory('타이틀', 3));
-    categoryList.add(MainCategory('타이틀', 4));
+    categoryController.addCategory(MainCategory('title', 0));
+    categoryController.addCategory(MainCategory('title', 1));
+    categoryController.addCategory(MainCategory('title', 2));
+    categoryController.addCategory(MainCategory('title', 3));
+    categoryController.addCategory(MainCategory('title', 4));
   }
 
   @override
@@ -31,175 +34,179 @@ class _MainPage extends State<MainPage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Center(
-              /// 각 카테고리 리스트
               child: SizedBox(
                 height: getFulLSizePercent(context, listBoxSizePercent, false),
                 child: ListView.builder(
-                    itemCount: categoryList.length,
+                    itemCount: categoryController.categoryList.length,
                     itemBuilder: (context, idx) => Column(
                           children: [
+                            /// 각 카테고리 리스트
                             GestureDetector(
-                              child: Padding(
-                                padding: EdgeInsets.all(mainListPaddingSize),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    // 사진 박스
-                                    Container(
-                                        width: titleImgSize,
-                                        height: titleImgSize,
-                                        margin: EdgeInsets.only(
-                                            right: mainImgTitleThinSize),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Colors.black),
-                                        child:
-                                            // 사진 없음
-                                            categoryList[idx].imgNum == 0
-                                                ? Container()
-                                                // 사진 하나
-                                                : categoryList[idx].imgNum == 1
-                                                    ? Container(
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    titleImgRound)),
-                                                        width: titleImgSize / 2,
-                                                        height: titleImgSize / 2,
-                                                        child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                    titleImgRound),
-                                                            child:
-                                                                categoryList[idx]
-                                                                    .imgList[0]),
-                                                      )
-                                                    // 사진 둘
-                                                    : categoryList[idx].imgNum ==
-                                                            2
-                                                        ? Container(
-                                                            decoration: BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                        titleImgRound)),
-                                                            width:
-                                                                titleImgSize / 2,
-                                                            height:
-                                                                titleImgSize / 2,
-                                                            child: Column(
-                                                              children: [
-                                                                Row(
-                                                                  children: [
-                                                                    listTitleImg(
-                                                                        1,
-                                                                        img: categoryList[
-                                                                                idx]
-                                                                            .imgList[0]),
-                                                                    listTitleImg(
-                                                                        0),
-                                                                  ],
-                                                                ),
-                                                                Row(
-                                                                  children: [
-                                                                    listTitleImg(
-                                                                        0),
-                                                                    listTitleImg(
-                                                                        4,
-                                                                        img: categoryList[
-                                                                                idx]
-                                                                            .imgList[1]),
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ))
-                                                        // 이미지 3개
-                                                        : categoryList[idx].imgNum ==
-                                                                3
-                                                            ? Container(
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            titleImgRound)),
-                                                                width:
-                                                                    titleImgSize /
-                                                                        2,
-                                                                height:
-                                                                    titleImgSize /
-                                                                        2,
-                                                                child: Column(
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        listTitleImg(
-                                                                            1,
-                                                                            img: categoryList[idx]
-                                                                                .imgList[0]),
-                                                                        listTitleImg(
-                                                                            2,
-                                                                            img: categoryList[idx]
-                                                                                .imgList[1]),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        listTitleImg(
-                                                                            3,
-                                                                            img: categoryList[idx]
-                                                                                .imgList[2]),
-                                                                        listTitleImg(
-                                                                            0),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ))
-                                                            :
-                                                            // 이미지 4개
-                                                            Container(
-                                                                decoration:
-                                                                    BoxDecoration(borderRadius: BorderRadius.circular(titleImgRound)),
-                                                                width: titleImgSize / 2,
-                                                                height: titleImgSize / 2,
-                                                                child: Column(
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        listTitleImg(
-                                                                            1,
-                                                                            img: categoryList[idx]
-                                                                                .imgList[0]),
-                                                                        listTitleImg(
-                                                                            2,
-                                                                            img: categoryList[idx]
-                                                                                .imgList[1]),
-                                                                      ],
-                                                                    ),
-                                                                    Row(
-                                                                      children: [
-                                                                        listTitleImg(
-                                                                            3,
-                                                                            img: categoryList[idx]
-                                                                                .imgList[2]),
-                                                                        listTitleImg(
-                                                                            4,
-                                                                            img: categoryList[idx]
-                                                                                .imgList[3]),
-                                                                      ],
-                                                                    ),
-                                                                  ],
-                                                                ))),
-                                    Text(
-                                      categoryList[idx].title,
-                                      style: TextStyle(
-                                          fontSize: mainListTitleFontSize,
-                                          color: Color(color_deepMint)),
-                                    ),
-                                  ],
+                              child: Container(
+                                color: Colors.transparent, // 제스처 영역 확보
+                                child: Padding(
+                                  padding: EdgeInsets.all(mainListPaddingSize),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      // 사진 박스
+                                      Container(
+                                          width: titleImgSize,
+                                          height: titleImgSize,
+                                          margin: EdgeInsets.only(
+                                              right: mainImgTitleThinSize),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              color: Colors.black),
+                                          child:
+                                              // 사진 없음
+                                          categoryController.categoryList[idx].imgNum == 0
+                                                  ? Container()
+                                                  // 사진 하나
+                                                  : categoryController.categoryList[idx].imgNum ==
+                                                          1
+                                                      ? Container(
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          titleImgRound)),
+                                                          width:
+                                                              titleImgSize / 2,
+                                                          height:
+                                                              titleImgSize / 2,
+                                                          child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          titleImgRound),
+                                                              child: categoryController.categoryList[
+                                                                      idx]
+                                                                  .imgList[0]),
+                                                        )
+                                                      // 사진 둘
+                                                      : categoryController.categoryList[idx].imgNum ==
+                                                              2
+                                                          ? Container(
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                          titleImgRound)),
+                                                              width: titleImgSize /
+                                                                  2,
+                                                              height: titleImgSize /
+                                                                  2,
+                                                              child: Column(
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      listTitleImg(
+                                                                          1,
+                                                                          img: categoryController.categoryList[idx]
+                                                                              .imgList[0]),
+                                                                      listTitleImg(
+                                                                          0),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      listTitleImg(
+                                                                          0),
+                                                                      listTitleImg(
+                                                                          4,
+                                                                          img: categoryController.categoryList[idx]
+                                                                              .imgList[1]),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              ))
+                                                          // 이미지 3개
+                                                          : categoryController.categoryList[idx]
+                                                                      .imgNum ==
+                                                                  3
+                                                              ? Container(
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              titleImgRound)),
+                                                                  width:
+                                                                      titleImgSize /
+                                                                          2,
+                                                                  height:
+                                                                      titleImgSize /
+                                                                          2,
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          listTitleImg(
+                                                                              1,
+                                                                              img: categoryController.categoryList[idx].imgList[0]),
+                                                                          listTitleImg(
+                                                                              2,
+                                                                              img: categoryController.categoryList[idx].imgList[1]),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        children: [
+                                                                          listTitleImg(
+                                                                              3,
+                                                                              img: categoryController.categoryList[idx].imgList[2]),
+                                                                          listTitleImg(
+                                                                              0),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ))
+                                                              :
+                                                              // 이미지 4개
+                                                              Container(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(titleImgRound)),
+                                                                  width: titleImgSize / 2,
+                                                                  height: titleImgSize / 2,
+                                                                  child: Column(
+                                                                    children: [
+                                                                      Row(
+                                                                        children: [
+                                                                          listTitleImg(
+                                                                              1,
+                                                                              img: categoryController.categoryList[idx].imgList[0]),
+                                                                          listTitleImg(
+                                                                              2,
+                                                                              img: categoryController.categoryList[idx].imgList[1]),
+                                                                        ],
+                                                                      ),
+                                                                      Row(
+                                                                        children: [
+                                                                          listTitleImg(
+                                                                              3,
+                                                                              img: categoryController.categoryList[idx].imgList[2]),
+                                                                          listTitleImg(
+                                                                              4,
+                                                                              img: categoryController.categoryList[idx].imgList[3]),
+                                                                        ],
+                                                                      ),
+                                                                    ],
+                                                                  ))),
+                                      Text(
+                                        categoryController.categoryList[idx].title,
+                                        style: TextStyle(
+                                            fontSize: mainListTitleFontSize,
+                                            color: Color(color_deepMint)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              onTap: (){},
+                              onTap: () {
+                                Get.to(ImageListPage());
+                              },
                             ),
-                            if (idx < categoryList.length - 1) Divider()
+                            if (idx < categoryController.categoryList.length - 1) Divider()
                           ],
                         )),
               ),
@@ -269,18 +276,4 @@ class listTitleImg extends StatelessWidget {
   }
 }
 
-/// 카테고리
-class MainCategory {
-  int imgNum = 0;
-  String title = "";
-  List imgList = [];
 
-  MainCategory(String title, int imgNum) {
-    this.title = title;
-    this.imgNum = imgNum;
-    imgList.add(Image.asset('assets/img/test1.jpg', fit: BoxFit.fill));
-    imgList.add(Image.asset('assets/img/test2.jpg', fit: BoxFit.fill));
-    imgList.add(Image.asset('assets/img/test3.jpg', fit: BoxFit.fill));
-    imgList.add(Image.asset('assets/img/test4.jpg', fit: BoxFit.fill));
-  }
-}

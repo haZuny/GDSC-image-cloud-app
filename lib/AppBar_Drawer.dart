@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:toy_project/MainPage.dart';
 import 'BaseFile.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSize {
@@ -65,13 +68,12 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
               onChanged: (e) {
                 switch (e) {
                   case 1:
-                    print('anpr');
+                    Get.offAll(MainPage());
                     break;
                   case 2:
                     print('qwer');
                     break;
                   default:
-                    print('aaaaa');
                     break;
                 }
               },
