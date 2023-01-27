@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'MainPage.dart';
 import 'ImgListPage.dart';
+import 'package:get/get.dart';
 
 void main() {
   /// 상태바 색상 변경
@@ -15,13 +16,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         appBarTheme: AppBarTheme(systemOverlayStyle:SystemUiOverlayStyle.light,)
       ),
       // home: MainPage(),
-      home: ImageListPage(),
+      home: MainPage(),
     );
   }
 }

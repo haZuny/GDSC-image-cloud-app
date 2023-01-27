@@ -14,13 +14,19 @@ double btnRound = 20;
 double appBarMenuPaddingSize = 15;
 double appBarDropDownWidth = 150;
 double appBarDropDownIconSize = 30;
+double floatingBtnMargin = 10;
 // MainPage
-int listBoxSizePercent = 70;
+int listBoxSizePercent = 70;  // height
 double titleImgSize = 60;
 double titleImgRound = 20;
 double mainListTitleFontSize = 20;
 double mainListPaddingSize = 20;
 double mainImgTitleThinSize = 30;
+// ImageListPage
+double imgListPageDateFontSize = 18;
+double imgListPageDateFontPadding = 10;
+double imgListPageDatePadding = 10;
+double imgListPageGabPerImg = 5;
 
 /// 화면 크기 반환
 double getFulLSizePercent(BuildContext context, int percent, bool isWidth){
