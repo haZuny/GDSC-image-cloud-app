@@ -11,9 +11,21 @@ class ImageDetailPage extends StatefulWidget {
 }
 
 class _ImageDetailPage extends State<ImageDetailPage> {
+  /// 화면 상태
   bool showOnlyImg = false;
-  ImageDetailObj img = ImageDetailObj(
-      1, Image.asset('assets/img/test3.jpg'), DateTime.now(), '카테고리');
+  late ImageDetailObj img;
+
+  /// 카테고리
+  String categoryVal = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    img = ImageDetailObj(
+        1, Image.asset('assets/img/test3.jpg'), DateTime.now(), 'animal');
+    categoryVal = img.category;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,122 +43,201 @@ class _ImageDetailPage extends State<ImageDetailPage> {
           child: showOnlyImg
               ? null
               : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    /// 정보 버튼
-                    ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
 
-                            /// 상세 정보 다이얼로그
-                            builder: (context) => AlertDialog(
-                                  title: Text(
-                                    '상세 정보',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  titleTextStyle: TextStyle(
-                                      color: Color(color_deepMint),
-                                      fontSize: imgDetailDialogTitleFontSize),
-                                  content: Padding(
-                                    padding: EdgeInsets.all(
-                                        imgDetailDialogContentPadding),
-                                    child: Container(
-                                      height: getFulLSizePercent(context, 15, false),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+              /// 정보 버튼
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+
+                      /// 상세 정보 다이얼로그
+                      builder: (context) =>
+                          StatefulBuilder(
+                            builder: (context, setState2) {
+                              return AlertDialog(
+                                title: Text(
+                                  '상세 정보',
+                                  textAlign: TextAlign.center,
+                                ),
+                                titleTextStyle: TextStyle(
+                                    color: Color(color_deepMint),
+                                    fontSize: imgDetailDialogTitleFontSize),
+                                content: Padding(
+                                  padding: EdgeInsets.all(
+                                      imgDetailDialogContentPadding),
+                                  child: SingleChildScrollView(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          height: 48,
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            '파일이름',
+                                            style: TextStyle(
+                                              color: Color(color_deepMint),
+                                              fontSize:
+                                              imgDetailDialogContentFontSize,
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 48,
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            '${img.uploadedAt.year}년 ${img.uploadedAt
+                                                .month}월 ${img.uploadedAt.day}일 업로드',
+                                            style: TextStyle(
+                                              color: Color(color_deepMint),
+                                              fontSize:
+                                              imgDetailDialogContentFontSize,
+                                            ),
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              '파일이름',
+                                              '분류: ',
                                               style: TextStyle(
                                                 color: Color(color_deepMint),
                                                 fontSize:
-                                                    imgDetailDialogContentFontSize,
+                                                imgDetailDialogContentFontSize,
                                               ),
                                             ),
-                                            Text(
-                                              '${img.uploadedAt.year}년 ${img.uploadedAt.year}월 ${img.uploadedAt.year}일 업로드됨',
-                                              style: TextStyle(
-                                                color: Color(color_deepMint),
-                                                fontSize:
-                                                    imgDetailDialogContentFontSize,
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  '분류: ',
+                                            Expanded(
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: DropdownButton(
+                                                  items: [
+                                                    DropdownMenuItem(
+                                                      child: Text('동물'),
+                                                      value: 'animal',
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text('음식'),
+                                                      value: 'food',
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text('실내'),
+                                                      value: 'indoor',
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text('자동차'),
+                                                      value: 'mobility',
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text('풍경'),
+                                                      value: 'outdoor',
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text('인물'),
+                                                      value: 'person',
+                                                    ),
+                                                    DropdownMenuItem(
+                                                      child: Text('그 외'),
+                                                      value: 'other',
+                                                    ),
+                                                  ],
+                                                  // 변경 메소드
+                                                  onChanged: (val) {
+                                                      setState2((){
+                                                        categoryVal = val.toString();
+                                                      });
+                                                  },
+                                                  value: categoryVal,
                                                   style: TextStyle(
                                                     color: Color(color_deepMint),
                                                     fontSize:
-                                                        imgDetailDialogContentFontSize,
+                                                    imgDetailDialogContentFontSize,
+                                                    fontWeight: FontWeight.bold
                                                   ),
-                                                ),Text(
-                                                  '\t\t' + img.category + '\t\t',
-                                                  style: TextStyle(
-                                                    color: Color(color_deepMint),
-                                                    fontSize:
-                                                        imgDetailDialogContentFontSize,
-                                                  ),
+                                                  alignment: Alignment.center,
+                                                  underline: Container(),
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            )
                                           ],
                                         ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                actions: [
+                                  /// 닫기 버튼
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: Text(
+                                      '닫기',
+                                      style: TextStyle(
+                                        color: Color(color_deepMint),
+                                        fontSize:
+                                        imgDetailDialogContentFontSize,
                                       ),
                                     ),
-                                  ),actions: [TextButton(onPressed: (){}, child: Text('a'))],
-                                ));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100)),
-                        backgroundColor: Color(color_whiteMint),
-                        minimumSize: Size(
-                            getFulLSizePercent(
-                                context, btnDoubleWidthPercent, true),
-                            btnHeight),
-                      ),
-                      child: Text(
-                        '정보',
-                        style: TextStyle(
-                            color: Color(color_deepMint),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      width: getFulLSizePercent(
-                          context, btnDoubleGabPercent, true),
-                    ),
-
-                    /// 삭제 버튼
-                    ElevatedButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100)),
-                        backgroundColor: Color(color_whiteMint),
-                        minimumSize: Size(
-                            getFulLSizePercent(
-                                context, btnDoubleWidthPercent, true),
-                            btnHeight),
-                      ),
-                      child: Text(
-                        '삭제',
-                        style: TextStyle(
-                            color: Color(color_deepMint),
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    )
-                  ],
+                                  )
+                                ],
+                                actionsAlignment: MainAxisAlignment.center,
+                                shape: OutlineInputBorder(borderRadius: BorderRadius.circular(imgDetailDialogRound)),
+                              );
+                            }
+                          ));
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100)),
+                  backgroundColor: Color(color_whiteMint),
+                  minimumSize: Size(
+                      getFulLSizePercent(
+                          context, btnDoubleWidthPercent, true),
+                      btnHeight),
                 ),
+                child: Text(
+                  '정보',
+                  style: TextStyle(
+                      color: Color(color_deepMint),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+              Container(
+                width: getFulLSizePercent(
+                    context, btnDoubleGabPercent, true),
+              ),
+
+              /// 삭제 버튼
+              ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100)),
+                  backgroundColor: Color(color_whiteMint),
+                  minimumSize: Size(
+                      getFulLSizePercent(
+                          context, btnDoubleWidthPercent, true),
+                      btnHeight),
+                ),
+                child: Text(
+                  '삭제',
+                  style: TextStyle(
+                      color: Color(color_deepMint),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
         ),
 
         /// 이미지
