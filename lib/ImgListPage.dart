@@ -6,6 +6,7 @@ import 'GetControllers.dart';
 
 import 'BaseFile.dart';
 import 'AppBar_Drawer.dart';
+import 'ImageDetailPage.dart';
 
 class ImageListPage extends StatefulWidget {
   @override
@@ -50,7 +51,7 @@ class _ImageListPage extends State<ImageListPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: MyAppBar(true), 
+      appBar: MyAppBar(true),
       floatingActionButton: Container(
         margin: EdgeInsets.all(floatingBtnMargin),
         child: FloatingActionButton.small(
@@ -142,12 +143,15 @@ class _ImageListPage extends State<ImageListPage> {
                       itemCount: controller
                           .dateImgObjMap[controller.dateKeyList[idx]]!.length,
                       itemBuilder: (context, idx2) {
-                        return Padding(
-                            padding: EdgeInsets.all(imgListPageGabPerImg),
-                            child: controller
-                                .dateImgObjMap[controller.dateKeyList[idx]]![
-                                    idx2]
-                                .photo);
+                        return GestureDetector(
+                          child: Padding(
+                              padding: EdgeInsets.all(imgListPageGabPerImg),
+                              child: controller
+                                  .dateImgObjMap[controller.dateKeyList[idx]]![
+                                      idx2]
+                                  .photo),
+                          onTap: () => Get.to(ImageDetailPage()),
+                        );
                       },
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 4),

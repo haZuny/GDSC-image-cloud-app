@@ -17,15 +17,15 @@ class MainCategory {
     imgList.add(Image.asset('assets/img/test4.jpg', fit: BoxFit.fill));
   }
 }
+
 // Controller
-class MainCategoryController extends GetxController{
+class MainCategoryController extends GetxController {
   RxList categoryList = [].obs;
 
-  void addCategory(MainCategory category){
+  void addCategory(MainCategory category) {
     categoryList.add(category);
   }
 }
-
 
 /// ImageListPage
 // 이미지 객체
@@ -40,20 +40,22 @@ class ImageObj {
         photo = img,
         uploadAt = date;
 }
+
 // Controller
-class ImageListController extends GetxController{
+class ImageListController extends GetxController {
   /// 날짜별로 정렬된 키
   RxMap dateImgObjMap = {}.obs;
+
   /// 키 리스트
   List dateKeyList = [];
 
-  void addImgObj(ImageObj img){
-    if(dateKeyList.contains(img.uploadAt)){
+  void addImgObj(ImageObj img) {
+    if (dateKeyList.contains(img.uploadAt)) {
       dateImgObjMap[img.uploadAt].add(img);
-    }
-    else{
+    } else {
       dateImgObjMap[img.uploadAt] = [img];
       dateKeyList.add(img.uploadAt);
     }
   }
 }
+

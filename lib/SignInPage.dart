@@ -84,7 +84,7 @@ class SignInPage extends StatelessWidget {
               /// 로그인 버튼
               ElevatedButton(
                 onPressed: () {
-                  Get.to(MainPage());
+                  Get.offAll(MainPage());
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(

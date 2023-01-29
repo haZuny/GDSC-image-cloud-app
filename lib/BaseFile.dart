@@ -16,6 +16,8 @@ double appBarDropDownWidth = 150;
 double appBarDropDownIconSize = 30;
 double floatingBtnMargin = 10;
 int btnSingleWidthPercent = 50;
+int btnDoubleWidthPercent = 30;
+int btnDoubleGabPercent = 5;
 double btnHeight = 50;
 // SignInUpPage
 double signInPageTFRound = 10;
@@ -35,6 +37,7 @@ double mainImgTitleThinSize = 30;
 // AddImgDialog
 double bgOpacity = 0.8;
 int bgPageBtnSizePercent = 35;
+double bgPageBtnFontSize = 18;
 double bgPageGabPerBtn = 20;
 double bgPageIconSize = 50;
 // ImageListPage
@@ -42,6 +45,11 @@ double imgListPageDateFontSize = 18;
 double imgListPageDateFontPadding = 10;
 double imgListPageDatePadding = 10;
 double imgListPageGabPerImg = 5;
+// ImageDetailPage
+int imgDetailPageBottomBtnMarginPercent = 5;
+double imgDetailDialogTitleFontSize = 23;
+double imgDetailDialogContentFontSize = 20;
+double imgDetailDialogContentPadding = 10;
 
 /// 화면 크기 반환
 double getFulLSizePercent(BuildContext context, int percent, bool isWidth){

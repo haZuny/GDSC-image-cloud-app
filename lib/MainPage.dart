@@ -268,10 +268,10 @@ class _MainPage extends State<MainPage> {
                                         size: bgPageIconSize,
                                       ),
                                       Text(
-                                        '사진 찍기',
+                                        '사진 찍기\n',
                                         style: TextStyle(
                                             color: Color(color_deepMint),
-                                            fontSize: 20,
+                                            fontSize: bgPageBtnFontSize,
                                             fontWeight: FontWeight.bold),
                                       )
                                     ],
@@ -311,7 +311,7 @@ class _MainPage extends State<MainPage> {
                                         '앨범에서\n가져오기',
                                         style: TextStyle(
                                             color: Color(color_deepMint),
-                                            fontSize: 20,
+                                            fontSize: bgPageBtnFontSize,
                                             fontWeight: FontWeight.bold),
                                       )
                                     ],
