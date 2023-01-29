@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'MainPage.dart';
-import 'ImgListPage.dart';
 import 'package:get/get.dart';
+import 'SignInPage.dart';
+import 'SignInPage.dart';
+
 
 void main() {
   /// 상태바 색상 변경
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(systemOverlayStyle:SystemUiOverlayStyle.light,)
       ),
       // home: MainPage(),
-      home: MainPage(),
+      home: SignInPage(),
     );
   }
 }

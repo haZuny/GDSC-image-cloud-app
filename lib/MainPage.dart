@@ -62,10 +62,15 @@ class _MainPage extends State<MainPage> {
                                               color: Colors.black),
                                           child:
                                               // 사진 없음
-                                          categoryController.categoryList[idx].imgNum == 0
+                                              categoryController
+                                                          .categoryList[idx]
+                                                          .imgNum ==
+                                                      0
                                                   ? Container()
                                                   // 사진 하나
-                                                  : categoryController.categoryList[idx].imgNum ==
+                                                  : categoryController
+                                                              .categoryList[idx]
+                                                              .imgNum ==
                                                           1
                                                       ? Container(
                                                           decoration: BoxDecoration(
@@ -79,32 +84,38 @@ class _MainPage extends State<MainPage> {
                                                               titleImgSize / 2,
                                                           child: ClipRRect(
                                                               borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          titleImgRound),
-                                                              child: categoryController.categoryList[
+                                                                  BorderRadius.circular(
+                                                                      titleImgRound),
+                                                              child: categoryController
+                                                                  .categoryList[
                                                                       idx]
                                                                   .imgList[0]),
                                                         )
                                                       // 사진 둘
-                                                      : categoryController.categoryList[idx].imgNum ==
+                                                      : categoryController
+                                                                  .categoryList[
+                                                                      idx]
+                                                                  .imgNum ==
                                                               2
                                                           ? Container(
                                                               decoration: BoxDecoration(
                                                                   borderRadius:
                                                                       BorderRadius.circular(
                                                                           titleImgRound)),
-                                                              width: titleImgSize /
-                                                                  2,
-                                                              height: titleImgSize /
-                                                                  2,
+                                                              width:
+                                                                  titleImgSize /
+                                                                      2,
+                                                              height:
+                                                                  titleImgSize /
+                                                                      2,
                                                               child: Column(
                                                                 children: [
                                                                   Row(
                                                                     children: [
                                                                       listTitleImg(
                                                                           1,
-                                                                          img: categoryController.categoryList[idx]
+                                                                          img: categoryController
+                                                                              .categoryList[idx]
                                                                               .imgList[0]),
                                                                       listTitleImg(
                                                                           0),
@@ -116,27 +127,22 @@ class _MainPage extends State<MainPage> {
                                                                           0),
                                                                       listTitleImg(
                                                                           4,
-                                                                          img: categoryController.categoryList[idx]
+                                                                          img: categoryController
+                                                                              .categoryList[idx]
                                                                               .imgList[1]),
                                                                     ],
                                                                   ),
                                                                 ],
                                                               ))
                                                           // 이미지 3개
-                                                          : categoryController.categoryList[idx]
+                                                          : categoryController
+                                                                      .categoryList[idx]
                                                                       .imgNum ==
                                                                   3
                                                               ? Container(
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              titleImgRound)),
-                                                                  width:
-                                                                      titleImgSize /
-                                                                          2,
-                                                                  height:
-                                                                      titleImgSize /
-                                                                          2,
+                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(titleImgRound)),
+                                                                  width: titleImgSize / 2,
+                                                                  height: titleImgSize / 2,
                                                                   child: Column(
                                                                     children: [
                                                                       Row(
@@ -163,9 +169,7 @@ class _MainPage extends State<MainPage> {
                                                               :
                                                               // 이미지 4개
                                                               Container(
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                          borderRadius: BorderRadius.circular(titleImgRound)),
+                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(titleImgRound)),
                                                                   width: titleImgSize / 2,
                                                                   height: titleImgSize / 2,
                                                                   child: Column(
@@ -193,7 +197,8 @@ class _MainPage extends State<MainPage> {
                                                                     ],
                                                                   ))),
                                       Text(
-                                        categoryController.categoryList[idx].title,
+                                        categoryController
+                                            .categoryList[idx].title,
                                         style: TextStyle(
                                             fontSize: mainListTitleFontSize,
                                             color: Color(color_deepMint)),
@@ -206,7 +211,9 @@ class _MainPage extends State<MainPage> {
                                 Get.to(ImageListPage());
                               },
                             ),
-                            if (idx < categoryController.categoryList.length - 1) Divider()
+                            if (idx <
+                                categoryController.categoryList.length - 1)
+                              Divider()
                           ],
                         )),
               ),
@@ -219,7 +226,102 @@ class _MainPage extends State<MainPage> {
                       borderRadius: BorderRadius.circular(btnRound)),
                   minimumSize: Size(btnWidthSize, btnHeightSize),
                   backgroundColor: Color(color_whiteMint)),
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                    context: context,
+
+                    /// 사진 추가 페이지
+                    builder: (context) => GestureDetector(
+                          onTap: () => Get.back(),
+                          child: Container(
+                            height: double.infinity,
+                            color: Color.fromRGBO(0, 0, 0, bgOpacity),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // 사진 찍기 버튼
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              16)),
+                                      backgroundColor: Color(color_whiteMint),
+                                      minimumSize: Size(
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true),
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true)),
+                                      maximumSize:
+                                          Size(
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true),
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true))),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.camera_alt_outlined,
+                                        color: Color(color_deepMint),
+                                        size: bgPageIconSize,
+                                      ),
+                                      Text(
+                                        '사진 찍기\n',
+                                        style: TextStyle(
+                                            color: Color(color_deepMint),
+                                            fontSize: bgPageBtnFontSize,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: bgPageGabPerBtn,
+                                ),
+                                // 앨범 추가 버튼
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              16)),
+                                      backgroundColor: Color(color_whiteMint),
+                                      minimumSize: Size(
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true),
+                                          getFulLSizePercent(context,
+                                              bgPageBtnSizePercent, true)),
+                                      maximumSize:
+                                          Size(
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true),
+                                              getFulLSizePercent(context,
+                                                  bgPageBtnSizePercent, true))),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.image_outlined,
+                                        color: Color(color_deepMint),
+                                        size: bgPageIconSize,
+                                      ),
+                                      Text(
+                                        '앨범에서\n가져오기',
+                                        style: TextStyle(
+                                            color: Color(color_deepMint),
+                                            fontSize: bgPageBtnFontSize,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ));
+              },
               child: Text(
                 "사진 추가",
                 style: TextStyle(
@@ -275,5 +377,3 @@ class listTitleImg extends StatelessWidget {
     );
   }
 }
-
-
