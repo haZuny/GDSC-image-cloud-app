@@ -51,8 +51,8 @@ double imgListPageDatePadding = 10;
 double imgListPageGabPerImg = 5;
 // ImageDetailPage
 int imgDetailPageBottomBtnMarginPercent = 5;
-double imgDetailDialogTitleFontSize = 23;
-double imgDetailDialogContentFontSize = 20;
+double imgDetailDialogTitleFontSize = 20;
+double imgDetailDialogContentFontSize = 17;
 double imgDetailDialogContentPadding = 10;
 double imgDetailDialogRound = 20;
 // UploadImgPage

@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toy_project/Classifier.dart';
 import 'package:toy_project/UploadImgPage.dart';
 import 'GetControllers.dart';
 
@@ -25,6 +29,7 @@ class _MainPage extends State<MainPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // 임시로 카테고리 삽입
     categoryController.addCategory(MainCategory('title', 0));
     categoryController.addCategory(MainCategory('title', 1));
     categoryController.addCategory(MainCategory('title', 2));
@@ -248,9 +253,13 @@ class _MainPage extends State<MainPage> {
                                 // 사진 찍기 버튼
                                 ElevatedButton(
                                   onPressed: () async {
+                                    // 사진 촬영
                                     XFile? img = await imagePicker.pickImage(
                                         source: ImageSource.camera);
                                     if (img != null) {
+                                      File imgFile = File(img.path);
+                                      Classifier c = Classifier();
+                                      print(await c.classify(File(img.path)));
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
                                         "category": "food"
@@ -300,6 +309,8 @@ class _MainPage extends State<MainPage> {
                                     XFile? img = await imagePicker.pickImage(
                                         source: ImageSource.gallery);
                                     if (img != null) {
+                                      Classifier c = Classifier();
+                                      print(await c.classify(File(img.path)));
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
                                         "category": "food"
