@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
+/// API
+String hostURL = 'http://52.78.194.113:8080';
+
+
 /// Color
 int color_deepMint = 0xff246D7D;
 int color_whiteMint = 0xffA9DBE6;
