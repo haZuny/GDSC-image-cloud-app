@@ -59,3 +59,4 @@ class ImageListController extends GetxController {
   }
 }
 
+

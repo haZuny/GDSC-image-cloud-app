@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:toy_project/UploadImgPage.dart';
 import 'GetControllers.dart';
 
 import 'BaseFile.dart';
@@ -15,6 +17,9 @@ class MainPage extends StatefulWidget {
 class _MainPage extends State<MainPage> {
   /// GetX Controller
   final categoryController = Get.put(MainCategoryController());
+
+  /// ImagePicker
+  final imagePicker = ImagePicker();
 
   @override
   void initState() {
@@ -242,7 +247,16 @@ class _MainPage extends State<MainPage> {
                               children: [
                                 // 사진 찍기 버튼
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    XFile? img = await imagePicker.pickImage(
+                                        source: ImageSource.camera);
+                                    if (img != null) {
+                                      Get.off(UploadImgPage(), arguments: {
+                                        "image": img,
+                                        "category": "food"
+                                      });
+                                    }
+                                  },
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
@@ -282,7 +296,16 @@ class _MainPage extends State<MainPage> {
                                 ),
                                 // 앨범 추가 버튼
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    XFile? img = await imagePicker.pickImage(
+                                        source: ImageSource.gallery);
+                                    if (img != null) {
+                                      Get.off(UploadImgPage(), arguments: {
+                                        "image": img,
+                                        "category": "food"
+                                      });
+                                    }
+                                  },
                                   style: ElevatedButton.styleFrom(
                                       shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(

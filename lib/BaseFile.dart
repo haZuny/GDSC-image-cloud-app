@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
+/// API
+String hostURL = 'http://52.78.194.113:8080';
+
+
 /// Color
 int color_deepMint = 0xff246D7D;
 int color_whiteMint = 0xffA9DBE6;
@@ -50,6 +54,11 @@ int imgDetailPageBottomBtnMarginPercent = 5;
 double imgDetailDialogTitleFontSize = 23;
 double imgDetailDialogContentFontSize = 20;
 double imgDetailDialogContentPadding = 10;
+double imgDetailDialogRound = 20;
+// UploadImgPage
+double uploadImgPagePadding = 15;
+int uploadImgPageCategoryGabPercent = 10;
+int uploadImgPageContentsGabPercent = 5;
 
 /// 화면 크기 반환
 double getFulLSizePercent(BuildContext context, int percent, bool isWidth){
