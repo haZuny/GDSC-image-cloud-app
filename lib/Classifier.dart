@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui';
 import 'package:image/image.dart' as IMG;
 
 import 'package:flutter/services.dart';
@@ -28,8 +30,8 @@ class Classifier {
 
     // 이미지 비트맵 변환, 사이즈 변환
     var imgByte = await img.readAsBytes();
-    IMG.Image? imgBit = IMG.decodeImage(imgByte);
-    // IMG.Image? imgBit = IMG.copyResize(imgBitOrigin!, width: 224, height: 224);
+    IMG.Image? imgBitOrigin = IMG.decodeImage(imgByte);
+    IMG.Image? imgBit = IMG.copyResize(imgBitOrigin!, width: 224, height: 224);
     // 이미지 픽셀 바이트 저장
     var input = List<double>.filled(150528, 0).reshape([1, 224, 224, 3]);
     for (int x = 0; x < 224; x++){
@@ -40,7 +42,6 @@ class Classifier {
         input[0][x][y][2] = pixel!.b.toDouble();
       }
     }
-    print(input);
     print("=================");
     print(imgBit?.width);
     print(imgBit?.height);
@@ -53,6 +54,6 @@ class Classifier {
     // The run method will run inference and
     // store the resulting values in output.
     _interpreter.run(input, output);
-    return output;
+    return output[0];
   }
 }

@@ -27,6 +27,7 @@ class _UploadImgPage extends State<UploadImgPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  // Image.file(File(img.path)),
                   Image.file(File(img.path)),
                   /// 분류
                   Row(

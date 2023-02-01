@@ -311,6 +311,7 @@ class _MainPage extends State<MainPage> {
                                     if (img != null) {
                                       Classifier c = Classifier();
                                       print(await c.classify(File(img.path)));
+                                      // var img2 = await c.classify(File(img.path));
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
                                         "category": "food"
