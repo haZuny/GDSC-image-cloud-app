@@ -1,59 +1,111 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
-import 'dart:ui';
+
 import 'package:image/image.dart' as IMG;
-
-import 'package:flutter/services.dart';
-
-// Import tflite_flutter
+import 'package:collection/collection.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
+import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 class Classifier {
-  // 모델 라벨 경로
-  final _modelFile = 'ml/toy_project.tflite';
-
-  // Maximum length of sentence
-  final int _sentenceLen = 256;
-
-  final String start = '<START>';
-  final String pad = '<PAD>';
-  final String unk = '<UNKNOWN>';
-
-  late Map<String, int> _dict;
-
   // 텐서플로우 인터프리터
-  late Interpreter _interpreter;
+  late Interpreter interpreter;
+  late InterpreterOptions _interpreterOptions;
 
-  Future classify(File img) async {
-    // 텐서플로우 인터프리터 생성
-    _interpreter = await Interpreter.fromAsset(_modelFile);
+  // 인풋, 아웃풋 리스트
+  late List<int> _inputShape;
+  late List<int> _outputShape;
 
-    // 이미지 비트맵 변환, 사이즈 변환
-    var imgByte = await img.readAsBytes();
-    IMG.Image? imgBitOrigin = IMG.decodeImage(imgByte);
-    IMG.Image? imgBit = IMG.copyResize(imgBitOrigin!, width: 224, height: 224);
-    // 이미지 픽셀 바이트 저장
-    var input = List<double>.filled(150528, 0).reshape([1, 224, 224, 3]);
-    for (int x = 0; x < 224; x++){
-      for (int y = 0; y < 224; y++){
-        var pixel = imgBit?.getPixel(x, y);
-        input[0][x][y][0] = pixel!.r.toDouble();
-        input[0][x][y][1] = pixel!.g.toDouble();
-        input[0][x][y][2] = pixel!.b.toDouble();
-      }
+  // 입력 사진 객체, 아웃풋 버퍼
+  late TensorImage _inputImage;
+  late TensorBuffer _outputBuffer;
+
+  // 입력, 출력 타입
+  late TfLiteType _inputType;
+  late TfLiteType _outputType;
+
+  late var _probabilityProcessor;
+
+  late List<String> labels;
+
+  // String modelName = 'ml/toy_project.tflite';
+  String modelName = 'ml/mobilenet_v1_1.0_224_quant.tflite';
+
+  NormalizeOp preProcessNormalizeOp = NormalizeOp(0, 0);
+  // NormalizeOp get postProcessNormalizeOp;
+
+  // 생성자
+  Classifier({int? numThreads}) {
+    _interpreterOptions = InterpreterOptions();
+
+    if (numThreads != null) {
+      _interpreterOptions.threads = numThreads;
     }
-    print("=================");
-    print(imgBit?.width);
-    print(imgBit?.height);
-    print(imgBit?.getPixel(imgBit!.width-1, imgBit!.height-1));
-    // print(imgBit?.pixel);
+  }
 
-    // output of shape [1,2].
-    var output = List<double>.filled(6, 0).reshape([1, 6]);
+  // 모델 불러오기
+  Future<void> loadModel() async {
+    interpreter =
+        await Interpreter.fromAsset(modelName, options: _interpreterOptions);
 
-    // The run method will run inference and
-    // store the resulting values in output.
-    _interpreter.run(input, output);
-    return output[0];
+    _inputShape = interpreter.getInputTensor(0).shape;
+    _outputShape = interpreter.getOutputTensor(0).shape;
+    _inputType = interpreter.getInputTensor(0).type;
+    _outputType = interpreter.getOutputTensor(0).type;
+
+    _outputBuffer = TensorBuffer.createFixedSize(_outputShape, _outputType);
+    // _probabilityProcessor =
+    //     TensorProcessorBuilder().add(postProcessNormalizeOp).build();
+  }
+
+  // 이미지 전처리
+  TensorImage _preProcess() {
+    int cropSize = min(_inputImage.height, _inputImage.width);
+    return ImageProcessorBuilder()
+        .add(ResizeWithCropOrPadOp(cropSize, cropSize))
+        .add(ResizeOp(
+        _inputShape[1], _inputShape[2], ResizeMethod.NEAREST_NEIGHBOUR))
+        .add(preProcessNormalizeOp)
+        .build()
+        .process(_inputImage);
+  }
+
+  predict(File imageFile) async {
+    await loadModel();
+    IMG.Image? image =
+        IMG.decodeJpg(imageFile.readAsBytesSync());
+    _inputImage = TensorImage(_inputType);
+    _inputImage.loadImage(image!);
+    _inputImage = _preProcess();
+    interpreter.run(_inputImage.buffer, _outputBuffer.getBuffer());
+
+    // Map<String, double> labeledProb = TensorLabel.fromList(
+    //     labels, _probabilityProcessor.process(_outputBuffer))
+    //     .getMapWithFloatValue();
+    // final pred = getTopProbability(labeledProb);
+    //
+    // return Category(pred.key, pred.value);
+    return _outputBuffer.getDoubleList();
+  }
+
+  void close() {
+    interpreter.close();
   }
 }
+//
+// MapEntry<String, double> getTopProbability(Map<String, double> labeledProb) {
+//   var pq = PriorityQueue<MapEntry<String, double>>(compare);
+//   pq.addAll(labeledProb.entries);
+//
+//   return pq.first;
+// }
+//
+// int compare(MapEntry<String, double> e1, MapEntry<String, double> e2) {
+//   if (e1.value > e2.value) {
+//     return -1;
+//   } else if (e1.value == e2.value) {
+//     return 0;
+//   } else {
+//     return 1;
+//   }
+// }

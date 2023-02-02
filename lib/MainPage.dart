@@ -258,8 +258,8 @@ class _MainPage extends State<MainPage> {
                                         source: ImageSource.camera);
                                     if (img != null) {
                                       File imgFile = File(img.path);
-                                      Classifier c = Classifier();
-                                      print(await c.classify(File(img.path)));
+                                      // Classifier c = Classifier();
+                                      // print(await c.predict(File(img.path)));
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
                                         "category": "food"
@@ -310,7 +310,8 @@ class _MainPage extends State<MainPage> {
                                         source: ImageSource.gallery);
                                     if (img != null) {
                                       Classifier c = Classifier();
-                                      print(await c.classify(File(img.path)));
+                                      print(await c.predict(File(img.path)));
+                                      print("aaaaaaaaaaaaaaaaaaaaaaaa");
                                       // var img2 = await c.classify(File(img.path));
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
