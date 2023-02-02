@@ -257,9 +257,10 @@ class _MainPage extends State<MainPage> {
                                     XFile? img = await imagePicker.pickImage(
                                         source: ImageSource.camera);
                                     if (img != null) {
-                                      File imgFile = File(img.path);
-                                      // Classifier c = Classifier();
-                                      // print(await c.predict(File(img.path)));
+                                      Classifier c = Classifier(File(img.path));
+                                      print('======================');
+                                      print(await c.classify());
+                                      print('======================');
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
                                         "category": "food"
@@ -309,10 +310,10 @@ class _MainPage extends State<MainPage> {
                                     XFile? img = await imagePicker.pickImage(
                                         source: ImageSource.gallery);
                                     if (img != null) {
-                                      Classifier c = Classifier();
-                                      print(await c.predict(File(img.path)));
-                                      print("aaaaaaaaaaaaaaaaaaaaaaaa");
-                                      // var img2 = await c.classify(File(img.path));
+                                      Classifier c = Classifier(File(img.path));
+                                      print('======================');
+                                      print(await c.classify());
+                                      print('======================');
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
                                         "category": "food"

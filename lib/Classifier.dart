@@ -1,111 +1,53 @@
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
-
-import 'package:image/image.dart' as IMG;
-import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
+import 'package:image/image.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+import 'package:image/image.dart' as IMG;
 
 class Classifier {
-  // 텐서플로우 인터프리터
-  late Interpreter interpreter;
-  late InterpreterOptions _interpreterOptions;
-
-  // 인풋, 아웃풋 리스트
-  late List<int> _inputShape;
-  late List<int> _outputShape;
-
-  // 입력 사진 객체, 아웃풋 버퍼
+  // 이미지
+  late File imgFile;
   late TensorImage _inputImage;
-  late TensorBuffer _outputBuffer;
-
-  // 입력, 출력 타입
-  late TfLiteType _inputType;
-  late TfLiteType _outputType;
-
-  late var _probabilityProcessor;
-
-  late List<String> labels;
-
-  // String modelName = 'ml/toy_project.tflite';
-  String modelName = 'ml/mobilenet_v1_1.0_224_quant.tflite';
-
-  NormalizeOp preProcessNormalizeOp = NormalizeOp(0, 0);
-  // NormalizeOp get postProcessNormalizeOp;
+  late TensorImage tensorImage;
+  // tflite 인터프리터
+  late Interpreter interpreter;
+  // 모델
+  String modelName = 'ml/toy_project.tflite';
 
   // 생성자
-  Classifier({int? numThreads}) {
-    _interpreterOptions = InterpreterOptions();
-
-    if (numThreads != null) {
-      _interpreterOptions.threads = numThreads;
-    }
+  Classifier(File imgFile){
+    this.imgFile = imgFile;
   }
 
-  // 모델 불러오기
-  Future<void> loadModel() async {
-    interpreter =
-        await Interpreter.fromAsset(modelName, options: _interpreterOptions);
-
-    _inputShape = interpreter.getInputTensor(0).shape;
-    _outputShape = interpreter.getOutputTensor(0).shape;
-    _inputType = interpreter.getInputTensor(0).type;
-    _outputType = interpreter.getOutputTensor(0).type;
-
-    _outputBuffer = TensorBuffer.createFixedSize(_outputShape, _outputType);
-    // _probabilityProcessor =
-    //     TensorProcessorBuilder().add(postProcessNormalizeOp).build();
-  }
-
-  // 이미지 전처리
-  TensorImage _preProcess() {
+  // 사진 초기화
+  Future<TensorImage> preProcess() async {
+    _inputImage = TensorImage(interpreter.getInputTensor(0).type);
+    _inputImage.loadImage(IMG.decodeImage(imgFile.readAsBytesSync())!);
     int cropSize = min(_inputImage.height, _inputImage.width);
+    print("비교");
     return ImageProcessorBuilder()
         .add(ResizeWithCropOrPadOp(cropSize, cropSize))
         .add(ResizeOp(
-        _inputShape[1], _inputShape[2], ResizeMethod.NEAREST_NEIGHBOUR))
-        .add(preProcessNormalizeOp)
+        interpreter.getInputTensor(0).shape[1], interpreter.getInputTensor(0).shape[2], ResizeMethod.NEAREST_NEIGHBOUR))
+        // .add(NormalizeOp())
         .build()
         .process(_inputImage);
   }
 
-  predict(File imageFile) async {
-    await loadModel();
-    IMG.Image? image =
-        IMG.decodeJpg(imageFile.readAsBytesSync());
-    _inputImage = TensorImage(_inputType);
-    _inputImage.loadImage(image!);
-    _inputImage = _preProcess();
-    interpreter.run(_inputImage.buffer, _outputBuffer.getBuffer());
-
-    // Map<String, double> labeledProb = TensorLabel.fromList(
-    //     labels, _probabilityProcessor.process(_outputBuffer))
-    //     .getMapWithFloatValue();
-    // final pred = getTopProbability(labeledProb);
-    //
-    // return Category(pred.key, pred.value);
-    return _outputBuffer.getDoubleList();
+  // 모델 불러오기
+  Future<void> loadModel() async {
+    interpreter = await Interpreter.fromAsset(modelName);
   }
 
-  void close() {
-    interpreter.close();
+  // 분류
+  Future<List> classify() async {
+    await loadModel();
+    tensorImage = await preProcess();
+    var output = List<double>.filled(6, 0).reshape([1, 6]);
+    interpreter.run(tensorImage.buffer, output);
+    print(IMG.encodePng(tensorImage.image));
+    return output;
   }
 }
-//
-// MapEntry<String, double> getTopProbability(Map<String, double> labeledProb) {
-//   var pq = PriorityQueue<MapEntry<String, double>>(compare);
-//   pq.addAll(labeledProb.entries);
-//
-//   return pq.first;
-// }
-//
-// int compare(MapEntry<String, double> e1, MapEntry<String, double> e2) {
-//   if (e1.value > e2.value) {
-//     return -1;
-//   } else if (e1.value == e2.value) {
-//     return 0;
-//   } else {
-//     return 1;
-//   }
-// }

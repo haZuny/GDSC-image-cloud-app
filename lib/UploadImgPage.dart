@@ -16,6 +16,10 @@ class _UploadImgPage extends State<UploadImgPage> {
   XFile img = Get.arguments['image'];
   String category = Get.arguments['category'];
 
+  _UploadImgPage(){
+    print("뭘까뭘까");
+  }
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: MyAppBar(true),
@@ -27,7 +31,6 @@ class _UploadImgPage extends State<UploadImgPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // Image.file(File(img.path)),
                   Image.file(File(img.path)),
                   /// 분류
                   Row(
