@@ -20,10 +20,6 @@ class _UploadImgPage extends State<UploadImgPage> {
   XFile img = Get.arguments['image'];
   String category = Get.arguments['category'];
 
-  _UploadImgPage() {
-    print("뭘까뭘까");
-  }
-
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: MyAppBar(true, '사진 분류 어플'),
@@ -144,7 +140,6 @@ class _UploadImgPage extends State<UploadImgPage> {
   // 사진 업로드
   Future<int> apiPostFileUpload(String id, String category, File image) async {
     String uri = hostURL + 's3/file';
-    print(id);
     myDio.FormData body = myDio.FormData.fromMap({
       "uploadPhotoResponse": myDio.MultipartFile.fromString(
         jsonEncode({"uid": id, 'category':category.toUpperCase()}),
@@ -161,7 +156,6 @@ class _UploadImgPage extends State<UploadImgPage> {
       return 0;
     } catch (e) {
       print('==========\n업로드 실패\n==========');
-      print(e);
       return -1;
     }
   }

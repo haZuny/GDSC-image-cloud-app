@@ -35,7 +35,7 @@ class _ImageDetailPage extends State<ImageDetailPage> {
         extendBodyBehindAppBar: true,
         // 앱바 겹치게
         /// 하단 버튼
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Container(
           margin: EdgeInsets.only(
               bottom: getFulLSizePercent(
