@@ -1,8 +1,39 @@
 import 'package:flutter/cupertino.dart';
 
 /// API
-String hostURL = 'http://52.78.194.113:8080';
+String hostURL = 'http://52.78.194.113:8080/';
+String uid = '';
+String token = '';
+String refToken = '';
 
+/// Category Label
+Map categoryLabel = {
+  'ANIMAL': '동물',
+  'FOOD': '음식',
+  'INDOOR': '실내',
+  'MOBILITY': '자동차',
+  'OUTDOOR': '풍경',
+  'PERSON': '인물',
+  'OTHER': '그 외'
+};
+
+/// 이미지 객체
+class ImageObj {
+  final int phothID;
+  final Image photo;
+  final DateTime uploadAt;
+  final String category;
+  final String filePath;
+
+  // 생성자
+  const ImageObj(
+      int id, Image img, String category, DateTime date, String filePath)
+      : phothID = id,
+        photo = img,
+        this.category = category,
+        uploadAt = date,
+        this.filePath = filePath;
+}
 
 /// Color
 int color_deepMint = 0xff246D7D;
@@ -32,7 +63,7 @@ double signInPagePerTFGab = 30;
 double signInPagePerBtnGab = 20;
 double signInPageTF_BTNGab = 70;
 // MainPage
-int listBoxSizePercent = 70;  // height
+int listBoxSizePercent = 70; // height
 double titleImgSize = 60;
 double titleImgRound = 20;
 double mainListTitleFontSize = 20;
@@ -61,8 +92,8 @@ int uploadImgPageCategoryGabPercent = 10;
 int uploadImgPageContentsGabPercent = 5;
 
 /// 화면 크기 반환
-double getFulLSizePercent(BuildContext context, int percent, bool isWidth){
-  if(isWidth)
+double getFulLSizePercent(BuildContext context, int percent, bool isWidth) {
+  if (isWidth)
     return (MediaQuery.of(context).size.width * percent / 100);
   else
     return (MediaQuery.of(context).size.height * percent / 100);

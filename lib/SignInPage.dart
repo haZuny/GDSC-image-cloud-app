@@ -4,15 +4,19 @@ import 'package:toy_project/MainPage.dart';
 import 'package:toy_project/SignUpPage.dart';
 import 'BaseFile.dart';
 import 'AppBar_Drawer.dart';
+import 'package:dio/dio.dart';
 
 class SignInPage extends StatelessWidget {
+  TextEditingController signInIdController = TextEditingController();
+  TextEditingController signInPwController = TextEditingController();
+
   @override
   Widget build(BuildContext context) => GestureDetector(
     onTap: (){
       FocusScope.of(context).unfocus();
     },
     child: Scaffold(
-          appBar: MyAppBar(false),
+          appBar: MyAppBar(false, '사진 분류 어플'),
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,6 +26,7 @@ class SignInPage extends StatelessWidget {
                 width:
                     getFulLSizePercent(context, signInPageTFWidthPercent, true),
                 child: TextField(
+                  controller: signInIdController,
                     decoration: InputDecoration(
                   // 기본 테두리
                   enabledBorder: OutlineInputBorder(
@@ -54,6 +59,7 @@ class SignInPage extends StatelessWidget {
                 width:
                     getFulLSizePercent(context, signInPageTFWidthPercent, true),
                 child: TextField(
+                  controller: signInPwController,
                     decoration: InputDecoration(
                   // 기본 테두리
                   enabledBorder: OutlineInputBorder(
@@ -83,8 +89,13 @@ class SignInPage extends StatelessWidget {
 
               /// 로그인 버튼
               ElevatedButton(
-                onPressed: () {
-                  Get.offAll(MainPage());
+                onPressed: () async {
+                  String id = signInIdController.text;
+                  String pw = signInPwController.text;
+                  if(await apiPostSignUp(id, pw) == 0){
+                    Get.offAll(MainPage());
+                  }
+
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -132,4 +143,26 @@ class SignInPage extends StatelessWidget {
           ),
         ),
   );
+
+  /// API
+  // 로그인
+  Future<int> apiPostSignUp(String id, String pw) async {
+    String uri = hostURL + 'user/signIn';
+    Map body = Map();
+    body['uid'] = id;
+    body['password'] = pw;
+    Dio dio = Dio();
+    try{
+      var res = await dio.post(uri, data: body);
+      uid = id;
+      token = res.headers['authorization']![0].split(' ')[1];
+      refToken = res.headers['refreshToken']![0];
+      print('==========\n로그인 성공\n==========');
+      return 0;
+    }
+    catch(e){
+      print('==========\n로그인 실패\n==========');
+      return -1;
+    }
+  }
 }

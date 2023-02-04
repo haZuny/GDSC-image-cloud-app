@@ -46,6 +46,9 @@ dependencies:
       url: https://github.com/filofan1/tflite_flutter_helper.git
       ref: 783f15e5a87126159147d8ea30b98eea9207ac70
   image: ^3.3.0
+  dio: ^4.0.6
+  http_parser: ^4.0.2
+  path_provider: ^2.0.12
 
 dev_dependencies:
   flutter_test:
