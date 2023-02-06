@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
 
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
@@ -40,6 +41,7 @@ class _ImageListPage extends State<ImageListPage> {
     // TODO: implement initState
     super.initState();
     apiGetImageList(uid, category, page);
+    ToastContext().init(context);
   }
 
   @override
@@ -57,8 +59,7 @@ class _ImageListPage extends State<ImageListPage> {
         margin: EdgeInsets.all(floatingBtnMargin),
         child: FloatingActionButton.small(
           onPressed: () {
-            // Get.back();
-            print(scrollController.offset);
+            Get.back();
           },
           child: Icon(Icons.arrow_back),
           backgroundColor: Color(color_mint),
@@ -239,6 +240,7 @@ class _ImageListPage extends State<ImageListPage> {
       return 0;
     } catch (e) {
       print('==========\n이미지 리스트 page$page 조회 실패\n==========');
+      Toast.show("정보를 받아오는데 실패했습니다.");
       return -1;
     }
   }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toast/toast.dart';
 import 'package:toy_project/Classifier.dart';
 import 'package:toy_project/UploadImgPage.dart';
 
@@ -29,12 +30,13 @@ class _MainPage extends State<MainPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
+    ToastContext().init(context);
     apiGetCategoryList(uid);
   }
 
   @override
   Widget build(context) => Scaffold(
+    resizeToAvoidBottomInset : false,
         appBar: MyAppBar(true, '사진 분류 어플'),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -392,6 +394,7 @@ class _MainPage extends State<MainPage> {
       return 0;
     } catch (e) {
       print('==========\n카테고리 조회 실패\n==========');
+      Toast.show("정보를 얻는데 실패했습니다.");
       return -1;
     }
   }

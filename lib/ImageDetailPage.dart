@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'BaseFile.dart';
+import 'package:toast/toast.dart';
 
 import 'AppBar_Drawer.dart';
 
@@ -29,6 +30,7 @@ class _ImageDetailPage extends State<ImageDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    ToastContext().init(context);
     return Scaffold(
         backgroundColor: showOnlyImg ? Colors.black : Colors.white,
         appBar: showOnlyImg ? null : MyAppBar(true, categoryLabel[img.category]),
@@ -271,10 +273,11 @@ class _ImageDetailPage extends State<ImageDetailPage> {
     try {
       var res = await dio.delete(uri, data: body);
       print('==========\n사진 삭제 성공\n==========');
+      Toast.show("성공적으로 삭제했습니다.");
       return 0;
     } catch (e) {
       print('==========\n사진 삭제 실패\n==========');
-      print(e);
+      Toast.show("사진 삭제 실패");
       return -1;
     }
   }

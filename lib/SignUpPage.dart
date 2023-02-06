@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'BaseFile.dart';
 import 'AppBar_Drawer.dart';
 import 'package:dio/dio.dart';
+import 'package:toast/toast.dart';
 
 class SignUpPage extends StatelessWidget {
   TextEditingController signUpIdController = TextEditingController();
@@ -10,163 +11,175 @@ class SignUpPage extends StatelessWidget {
   TextEditingController signUpPw2Controller = TextEditingController();
 
   @override
-  Widget build(BuildContext context) => GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Scaffold(
-          appBar: MyAppBar(false, '사진 분류 어플'),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              /// ID TF
-              Container(
-                width:
-                    getFulLSizePercent(context, signInPageTFWidthPercent, true),
-                child: TextField(
-                    controller: signUpIdController,
-                    decoration: InputDecoration(
-                      // 기본 테두리
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(signInPageTFRound),
-                          borderSide: BorderSide(
-                              width: signInPageTFBorderWidth,
-                              color: Color(color_deepMint))),
-                      // 선택 테두리
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(signInPageTFRound),
-                          borderSide: BorderSide(
-                              width: signInPageTFBorderWidth,
-                              color: Color(color_deepMint))),
-                      // 라벨
-                      labelText: 'ID',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle: TextStyle(
-                          fontSize: signInPageTFLabelFontSize,
-                          fontWeight: FontWeight.bold,
-                          color: Color(color_deepMint)),
-                    )),
-              ),
-              Container(
-                width: getFulLSizePercent(context, 100, true),
-                height: signInPagePerTFGab,
-              ),
+  Widget build(BuildContext context) {
+    ToastContext().init(context);
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: MyAppBar(false, '사진 분류 어플'),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                /// ID TF
+                Container(
+                  width: getFulLSizePercent(
+                      context, signInPageTFWidthPercent, true),
+                  child: TextField(
+                      controller: signUpIdController,
+                      decoration: InputDecoration(
+                        // 기본 테두리
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(signInPageTFRound),
+                            borderSide: BorderSide(
+                                width: signInPageTFBorderWidth,
+                                color: Color(color_deepMint))),
+                        // 선택 테두리
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(signInPageTFRound),
+                            borderSide: BorderSide(
+                                width: signInPageTFBorderWidth,
+                                color: Color(color_deepMint))),
+                        // 라벨
+                        labelText: 'ID',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: TextStyle(
+                            fontSize: signInPageTFLabelFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: Color(color_deepMint)),
+                      )),
+                ),
+                Container(
+                  width: getFulLSizePercent(context, 100, true),
+                  height: signInPagePerTFGab,
+                ),
 
-              /// PW TF
-              Container(
-                width:
-                    getFulLSizePercent(context, signInPageTFWidthPercent, true),
-                child: TextField(
-                    controller: signUpPwController,
-                    decoration: InputDecoration(
-                      // 기본 테두리
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(signInPageTFRound),
-                          borderSide: BorderSide(
-                              width: signInPageTFBorderWidth,
-                              color: Color(color_deepMint))),
-                      // 선택 테두리
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(signInPageTFRound),
-                          borderSide: BorderSide(
-                              width: signInPageTFBorderWidth,
-                              color: Color(color_deepMint))),
-                      // 라벨
-                      labelText: 'PW',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle: TextStyle(
-                          fontSize: signInPageTFLabelFontSize,
-                          fontWeight: FontWeight.bold,
-                          color: Color(color_deepMint)),
-                    )),
-              ),
-              Container(
-                width: getFulLSizePercent(context, 100, true),
-                height: signInPagePerTFGab,
-              ),
+                /// PW TF
+                Container(
+                  width: getFulLSizePercent(
+                      context, signInPageTFWidthPercent, true),
+                  child: TextField(
+                      obscureText: true,
+                      controller: signUpPwController,
+                      decoration: InputDecoration(
+                        // 기본 테두리
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(signInPageTFRound),
+                            borderSide: BorderSide(
+                                width: signInPageTFBorderWidth,
+                                color: Color(color_deepMint))),
+                        // 선택 테두리
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(signInPageTFRound),
+                            borderSide: BorderSide(
+                                width: signInPageTFBorderWidth,
+                                color: Color(color_deepMint))),
+                        // 라벨
+                        labelText: 'PW',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: TextStyle(
+                            fontSize: signInPageTFLabelFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: Color(color_deepMint)),
+                      )),
+                ),
+                Container(
+                  width: getFulLSizePercent(context, 100, true),
+                  height: signInPagePerTFGab,
+                ),
 
-              /// PW Check TF
-              Container(
-                width:
-                    getFulLSizePercent(context, signInPageTFWidthPercent, true),
-                child: TextField(
-                    controller: signUpPw2Controller,
-                    decoration: InputDecoration(
-                      // 기본 테두리
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(signInPageTFRound),
-                          borderSide: BorderSide(
-                              width: signInPageTFBorderWidth,
-                              color: Color(color_deepMint))),
-                      // 선택 테두리
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(signInPageTFRound),
-                          borderSide: BorderSide(
-                              width: signInPageTFBorderWidth,
-                              color: Color(color_deepMint))),
-                      // 라벨
-                      labelText: 'PW Check',
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      labelStyle: TextStyle(
-                          fontSize: signInPageTFLabelFontSize,
-                          fontWeight: FontWeight.bold,
-                          color: Color(color_deepMint)),
-                    )),
-              ),
-              Container(
-                width: getFulLSizePercent(context, 100, true),
-                height: signInPageTF_BTNGab,
-              ),
+                /// PW Check TF
+                Container(
+                  width: getFulLSizePercent(
+                      context, signInPageTFWidthPercent, true),
+                  child: TextField(
+                      obscureText: true,
+                      controller: signUpPw2Controller,
+                      decoration: InputDecoration(
+                        // 기본 테두리
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(signInPageTFRound),
+                            borderSide: BorderSide(
+                                width: signInPageTFBorderWidth,
+                                color: Color(color_deepMint))),
+                        // 선택 테두리
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(signInPageTFRound),
+                            borderSide: BorderSide(
+                                width: signInPageTFBorderWidth,
+                                color: Color(color_deepMint))),
+                        // 라벨
+                        labelText: 'PW Check',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        labelStyle: TextStyle(
+                            fontSize: signInPageTFLabelFontSize,
+                            fontWeight: FontWeight.bold,
+                            color: Color(color_deepMint)),
+                      )),
+                ),
+                Container(
+                  width: getFulLSizePercent(context, 100, true),
+                  height: signInPageTF_BTNGab,
+                ),
 
-              /// 회원가입 버튼
-              ElevatedButton(
-                onPressed: () async {
-                  String id = signUpIdController.text;
-                  String pw = signUpPwController.text;
-                  String pw2 = signUpPw2Controller.text;
-                  // 아이디 공백
-                  if (id == "") {
-                    print("아이디 공백");
-                    return;
-                  }
-                  // pw 일치 여부
-                  if (pw != pw2) {
-                    print('패스워드 불일치');
-                    return;
-                  }
-                  if (await apiGetCheckID(id) == 0) {
-                    if(await apiPostSignUp(id, pw) == 0){
-                      Get.back();
+                /// 회원가입 버튼
+                ElevatedButton(
+                  onPressed: () async {
+                    String id = signUpIdController.text;
+                    String pw = signUpPwController.text;
+                    String pw2 = signUpPw2Controller.text;
+                    // 아이디 공백
+                    if (id == "") {
+                      print("아이디 공백");
+                      Toast.show("아이디를 입력해주세요.");
+                      return;
                     }
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(100)),
-                  backgroundColor: Color(color_whiteMint),
-                  minimumSize: Size(
-                      getFulLSizePercent(context, btnSingleWidthPercent, true),
-                      btnHeight),
-                ),
-                child: Text(
-                  '회원가입',
-                  style: TextStyle(
-                      color: Color(color_deepMint),
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
+                    // pw 일치 여부
+                    if (pw != pw2) {
+                      print('패스워드 불일치');
+                      Toast.show("패스워드가 서로 다릅니다.");
+                      return;
+                    }
+                    if (await apiGetCheckID(id) == 0) {
+                      if (await apiPostSignUp(id, pw) == 0) {
+                        Get.back();
+                      }
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100)),
+                    backgroundColor: Color(color_whiteMint),
+                    minimumSize: Size(
+                        getFulLSizePercent(
+                            context, btnSingleWidthPercent, true),
+                        btnHeight),
+                  ),
+                  child: Text(
+                    '회원가입',
+                    style: TextStyle(
+                        color: Color(color_deepMint),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
-      );
+      ),
+    );
+  }
 
   /// API
   // 아이디 중복 체크
@@ -180,6 +193,7 @@ class SignUpPage extends StatelessWidget {
     }
     catch(e){
       print('==========\n아이디 중복\n==========');
+      Toast.show("이미 존재하는 아이디 입니다.");
       return -1;
     }
   }
@@ -194,10 +208,12 @@ class SignUpPage extends StatelessWidget {
     try{
       var res = await dio.post(uri, data: body);
       print('==========\n회원가입 성공\n==========');
+      Toast.show("회원가입 성공");
       return 0;
     }
     catch(e){
       print('==========\n회원가입 실패\n==========');
+      Toast.show("회원가입에 실패했습니다.");
       return -1;
     }
   }
