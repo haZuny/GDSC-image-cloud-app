@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:toast/toast.dart';
+import 'package:toy_project/Classifier.dart';
 import 'package:toy_project/UploadImgPage.dart';
-import 'GetControllers.dart';
 
 import 'BaseFile.dart';
 import 'ImgListPage.dart';
@@ -15,8 +19,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPage extends State<MainPage> {
-  /// GetX Controller
-  final categoryController = Get.put(MainCategoryController());
+  /// Category List
+  List<MainCategory> categoryList = [];
+  int categoryCount = 0;
 
   /// ImagePicker
   final imagePicker = ImagePicker();
@@ -25,16 +30,14 @@ class _MainPage extends State<MainPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    categoryController.addCategory(MainCategory('title', 0));
-    categoryController.addCategory(MainCategory('title', 1));
-    categoryController.addCategory(MainCategory('title', 2));
-    categoryController.addCategory(MainCategory('title', 3));
-    categoryController.addCategory(MainCategory('title', 4));
+    ToastContext().init(context);
+    apiGetCategoryList(uid);
   }
 
   @override
   Widget build(context) => Scaffold(
-        appBar: MyAppBar(true),
+    resizeToAvoidBottomInset : false,
+        appBar: MyAppBar(true, '사진 분류 어플'),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -42,7 +45,7 @@ class _MainPage extends State<MainPage> {
               child: SizedBox(
                 height: getFulLSizePercent(context, listBoxSizePercent, false),
                 child: ListView.builder(
-                    itemCount: categoryController.categoryList.length,
+                    itemCount: categoryCount,
                     itemBuilder: (context, idx) => Column(
                           children: [
                             /// 각 카테고리 리스트
@@ -67,15 +70,11 @@ class _MainPage extends State<MainPage> {
                                               color: Colors.black),
                                           child:
                                               // 사진 없음
-                                              categoryController
-                                                          .categoryList[idx]
-                                                          .imgNum ==
-                                                      0
+
+                                              categoryList[idx].imgNum == 0
                                                   ? Container()
                                                   // 사진 하나
-                                                  : categoryController
-                                                              .categoryList[idx]
-                                                              .imgNum ==
+                                                  : categoryList[idx].imgNum ==
                                                           1
                                                       ? Container(
                                                           decoration: BoxDecoration(
@@ -89,38 +88,32 @@ class _MainPage extends State<MainPage> {
                                                               titleImgSize / 2,
                                                           child: ClipRRect(
                                                               borderRadius:
-                                                                  BorderRadius.circular(
-                                                                      titleImgRound),
-                                                              child: categoryController
-                                                                  .categoryList[
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          titleImgRound),
+                                                              child: categoryList[
                                                                       idx]
                                                                   .imgList[0]),
                                                         )
                                                       // 사진 둘
-                                                      : categoryController
-                                                                  .categoryList[
-                                                                      idx]
-                                                                  .imgNum ==
+                                                      : categoryList[idx].imgNum ==
                                                               2
                                                           ? Container(
                                                               decoration: BoxDecoration(
                                                                   borderRadius:
                                                                       BorderRadius.circular(
                                                                           titleImgRound)),
-                                                              width:
-                                                                  titleImgSize /
-                                                                      2,
-                                                              height:
-                                                                  titleImgSize /
-                                                                      2,
+                                                              width: titleImgSize /
+                                                                  2,
+                                                              height: titleImgSize /
+                                                                  2,
                                                               child: Column(
                                                                 children: [
                                                                   Row(
                                                                     children: [
                                                                       listTitleImg(
                                                                           1,
-                                                                          img: categoryController
-                                                                              .categoryList[idx]
+                                                                          img: categoryList[idx]
                                                                               .imgList[0]),
                                                                       listTitleImg(
                                                                           0),
@@ -132,39 +125,44 @@ class _MainPage extends State<MainPage> {
                                                                           0),
                                                                       listTitleImg(
                                                                           4,
-                                                                          img: categoryController
-                                                                              .categoryList[idx]
+                                                                          img: categoryList[idx]
                                                                               .imgList[1]),
                                                                     ],
                                                                   ),
                                                                 ],
                                                               ))
                                                           // 이미지 3개
-                                                          : categoryController
-                                                                      .categoryList[idx]
+                                                          : categoryList[idx]
                                                                       .imgNum ==
                                                                   3
                                                               ? Container(
-                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(titleImgRound)),
-                                                                  width: titleImgSize / 2,
-                                                                  height: titleImgSize / 2,
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              titleImgRound)),
+                                                                  width:
+                                                                      titleImgSize /
+                                                                          2,
+                                                                  height:
+                                                                      titleImgSize /
+                                                                          2,
                                                                   child: Column(
                                                                     children: [
                                                                       Row(
                                                                         children: [
                                                                           listTitleImg(
                                                                               1,
-                                                                              img: categoryController.categoryList[idx].imgList[0]),
+                                                                              img: categoryList[idx].imgList[0]),
                                                                           listTitleImg(
                                                                               2,
-                                                                              img: categoryController.categoryList[idx].imgList[1]),
+                                                                              img: categoryList[idx].imgList[1]),
                                                                         ],
                                                                       ),
                                                                       Row(
                                                                         children: [
                                                                           listTitleImg(
                                                                               3,
-                                                                              img: categoryController.categoryList[idx].imgList[2]),
+                                                                              img: categoryList[idx].imgList[2]),
                                                                           listTitleImg(
                                                                               0),
                                                                         ],
@@ -174,7 +172,9 @@ class _MainPage extends State<MainPage> {
                                                               :
                                                               // 이미지 4개
                                                               Container(
-                                                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(titleImgRound)),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(titleImgRound)),
                                                                   width: titleImgSize / 2,
                                                                   height: titleImgSize / 2,
                                                                   child: Column(
@@ -183,27 +183,26 @@ class _MainPage extends State<MainPage> {
                                                                         children: [
                                                                           listTitleImg(
                                                                               1,
-                                                                              img: categoryController.categoryList[idx].imgList[0]),
+                                                                              img: categoryList[idx].imgList[0]),
                                                                           listTitleImg(
                                                                               2,
-                                                                              img: categoryController.categoryList[idx].imgList[1]),
+                                                                              img: categoryList[idx].imgList[1]),
                                                                         ],
                                                                       ),
                                                                       Row(
                                                                         children: [
                                                                           listTitleImg(
                                                                               3,
-                                                                              img: categoryController.categoryList[idx].imgList[2]),
+                                                                              img: categoryList[idx].imgList[2]),
                                                                           listTitleImg(
                                                                               4,
-                                                                              img: categoryController.categoryList[idx].imgList[3]),
+                                                                              img: categoryList[idx].imgList[3]),
                                                                         ],
                                                                       ),
                                                                     ],
                                                                   ))),
                                       Text(
-                                        categoryController
-                                            .categoryList[idx].title,
+                                        categoryList[idx].title,
                                         style: TextStyle(
                                             fontSize: mainListTitleFontSize,
                                             color: Color(color_deepMint)),
@@ -213,12 +212,18 @@ class _MainPage extends State<MainPage> {
                                 ),
                               ),
                               onTap: () {
-                                Get.to(ImageListPage());
+                                Get.to(ImageListPage(), arguments: {
+                                  'category': categoryList[idx].category
+                                })?.then((value) {
+                                  setState(() {
+                                    categoryCount = 0;
+                                    categoryList = [];
+                                  apiGetCategoryList(uid);
+                                  });
+                                });
                               },
                             ),
-                            if (idx <
-                                categoryController.categoryList.length - 1)
-                              Divider()
+                            if (idx < categoryList.length - 1) Divider()
                           ],
                         )),
               ),
@@ -234,7 +239,6 @@ class _MainPage extends State<MainPage> {
               onPressed: () {
                 showDialog(
                     context: context,
-
                     /// 사진 추가 페이지
                     builder: (context) => GestureDetector(
                           onTap: () => Get.back(),
@@ -248,12 +252,14 @@ class _MainPage extends State<MainPage> {
                                 // 사진 찍기 버튼
                                 ElevatedButton(
                                   onPressed: () async {
+                                    // 사진 촬영
                                     XFile? img = await imagePicker.pickImage(
                                         source: ImageSource.camera);
                                     if (img != null) {
+                                      Classifier c = Classifier(File(img.path));
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
-                                        "category": "food"
+                                        "category": await c.classify(),
                                       });
                                     }
                                   },
@@ -300,9 +306,10 @@ class _MainPage extends State<MainPage> {
                                     XFile? img = await imagePicker.pickImage(
                                         source: ImageSource.gallery);
                                     if (img != null) {
+                                      Classifier c = Classifier(File(img.path));
                                       Get.off(UploadImgPage(), arguments: {
                                         "image": img,
-                                        "category": "food"
+                                        "category": await c.classify(),
                                       });
                                     }
                                   },
@@ -356,6 +363,63 @@ class _MainPage extends State<MainPage> {
           ],
         ),
       );
+
+  /// API
+  // 카테고리 리스트 조회
+  Future<int> apiGetCategoryList(String id) async {
+    String uri = hostURL + 's3/file/all';
+    Map body = {"uid": id};
+    Dio dio = Dio();
+    dio.options.headers = {
+      'Authorization': "bearer " + token,
+    };
+
+    try {
+      // get
+      var res = await dio.request(uri,
+          data: body,
+          options: Options(method: "GET", contentType: "application/json"));
+      // 사진 파일 변환
+      for (Map category in res.data['data']) {
+        setState(() {
+          int count = category['count'];
+          if (count > 0) {
+            categoryCount++;
+            categoryList.add(MainCategory(category['category'],
+                category['count'], category['filePathList']));
+          }
+        });
+      }
+      print('==========\n카테고리 조회 성공\n==========');
+      return 0;
+    } catch (e) {
+      print('==========\n카테고리 조회 실패\n==========');
+      Toast.show("정보를 얻는데 실패했습니다.");
+      return -1;
+    }
+  }
+}
+
+/// 카테고리 객체
+class MainCategory {
+  int imgNum = 0;
+  String title = "";
+  String category = '';
+  List imgList = [];
+
+  MainCategory(String category, int imgNum, List imgList) {
+    this.category = category;
+    this.title = categoryLabel[category];
+    this.imgNum = imgNum;
+    if (imgList != null) {
+      for (var img in imgList) {
+        this.imgList.add(Image.network(
+              img,
+              fit: BoxFit.fill,
+            ));
+      }
+    }
+  }
 }
 
 /// 타이틀 이미지 조각
