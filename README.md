@@ -6,9 +6,9 @@
 
 # 기술 스택
 - FE
- * Flutter
+ ** Flutter
 - BE
- * Spring Boot
+ ** Spring Boot
 - ML
- * Tensorflow
- * TFlite
+ ** Tensorflow
+ ** TFlite
