@@ -28,7 +28,7 @@ App, Server, ML을 모두 사용해야하는 주제로 간단한 토이프로젝
 ### 회원가입
 |회원가입 성공|회원가입 실패_아이디 중복|회원가입 실패_패스워드 불일치|
 |----------|----------|----------|
-|<img width="300" src="https://user-images.githubusercontent.com/64102831/227734438-688ad581-73b7-4283-b194-42e935cbc01e.mp4"/>|<img width="300" src="https://user-images.githubusercontent.com/64102831/227734439-514353ab-28b1-4a44-90ae-88c4db8928f9.mp4"/>|<img width="300" src="https://user-images.githubusercontent.com/64102831/227734440-bbec6460-dcba-499a-8a77-80c99ffea8eb.mp4"/>|
+|[성공](https://user-images.githubusercontent.com/64102831/227734438-688ad581-73b7-4283-b194-42e935cbc01e.mp4)|[실패1](https://user-images.githubusercontent.com/64102831/227734439-514353ab-28b1-4a44-90ae-88c4db8928f9.mp4)|[실패2](https://user-images.githubusercontent.com/64102831/227734440-bbec6460-dcba-499a-8a77-80c99ffea8eb.mp4)|
 
 <br>
 
