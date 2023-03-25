@@ -1,16 +1,14 @@
-# toy_project
+# [GDSC] 이미지 분류 클라우드 애플리케이션
 
-A new Flutter project.
+내가 찍은 사진을 카테고리 별로 분류하여 서버에 저장하는 애플리케이션
 
-## Getting Started
+<br>
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# 기술 스택
+- FE
+ * Flutter
+- BE
+ * Spring Boot
+- ML
+ * Tensorflow
+ * TFlite
