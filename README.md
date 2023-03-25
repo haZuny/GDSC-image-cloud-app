@@ -69,4 +69,4 @@ App, Server, ML을 모두 사용해야하는 주제로 간단한 토이프로젝
 ## 기여자
 - [권하준/App](https://github.com/haZuny)
 - [이건희/Server](https://github.com/GeonHui2)
-- [손민기/ML]
+- 손민기/ML
