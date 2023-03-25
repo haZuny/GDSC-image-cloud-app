@@ -30,6 +30,8 @@ App, Server, ML을 모두 사용해야하는 주제로 간단한 토이프로젝
 |----------|----------|----------|
 |![성공](https://user-images.githubusercontent.com/64102831/227734438-688ad581-73b7-4283-b194-42e935cbc01e.mp4)|![실패1](https://user-images.githubusercontent.com/64102831/227734439-514353ab-28b1-4a44-90ae-88c4db8928f9.mp4)|![실패2](https://user-images.githubusercontent.com/64102831/227734440-bbec6460-dcba-499a-8a77-80c99ffea8eb.mp4)|
 
+<img width="30%" src="https://user-images.githubusercontent.com/64102831/227734963-042e096a-57e2-44c6-87f3-e3591cf63511.gif"/><img width="30%" src="https://user-images.githubusercontent.com/64102831/227734963-042e096a-57e2-44c6-87f3-e3591cf63511.gif"/><img width="30%" src="https://user-images.githubusercontent.com/64102831/227734963-042e096a-57e2-44c6-87f3-e3591cf63511.gif"/>
+
 <br>
 
 ## 기술 스택
